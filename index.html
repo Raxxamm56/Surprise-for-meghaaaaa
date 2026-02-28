@@ -17,7 +17,7 @@ body{
   overflow:hidden;
 }
 
-/* 9:16 container */
+/* 9:16 phone container */
 .phone{
   width:360px;
   height:640px;
@@ -32,14 +32,13 @@ body{
 .heart{
   position:absolute;
   color:rgba(255,255,255,0.8);
-  font-size:20px;
-  animation:floatHearts 6s linear infinite;
+  animation:floatHearts linear infinite;
 }
 
 @keyframes floatHearts{
-  0%{transform:translateY(100%);opacity:0;}
+  from{transform:translateY(700px);opacity:0;}
   30%{opacity:1;}
-  100%{transform:translateY(-120%);opacity:0;}
+  to{transform:translateY(-100px);opacity:0;}
 }
 
 /* Intro */
@@ -48,6 +47,7 @@ body{
   width:100%;
   top:40%;
   text-align:center;
+  color:white;
 }
 
 button{
@@ -60,7 +60,7 @@ button{
   cursor:pointer;
 }
 
-/* Balloons floating upward */
+/* Balloons */
 .balloon{
   width:70px;
   height:90px;
@@ -68,7 +68,7 @@ button{
   position:absolute;
   bottom:-120px;
   cursor:pointer;
-  animation:rise 6s linear forwards;
+  animation:rise 18s linear forwards;
 }
 
 .balloon::after{
@@ -83,7 +83,7 @@ button{
 
 @keyframes rise{
   from{transform:translateY(0);}
-  to{transform:translateY(-750px);}
+  to{transform:translateY(-800px);}
 }
 
 /* Popup */
@@ -95,15 +95,26 @@ button{
   border-radius:25px 25px 0 0;
   padding:15px;
   box-shadow:0 -5px 15px rgba(0,0,0,0.2);
+  animation:slideUp 0.5s ease;
 }
 
+@keyframes slideUp{
+  from{transform:translateY(100%);}
+  to{transform:translateY(0);}
+}
+
+/* Square image frame */
 .popup img{
   width:100%;
-  border-radius:15px;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:20px;
 }
 
 .popup p{
   font-size:14px;
+  margin-top:10px;
+  color:#333;
 }
 
 .hidden{display:none;}
@@ -138,23 +149,22 @@ const data = [
   { img:"photo3.jpeg", text:"Your smile is my biggest happiness 😊", color:"#fd79a8" },
   { img:"photo4.jpeg", text:"I never want to hurt you Meghaaaa Ji 💖", color:"#e84393" },
   { img:"photo5.jpeg", text:"You are my forever and always 🌹", color:"#fab1a0" },
-  { img:"photo6.jpeg", text:"Meghaaaa Ji... I am truly sorry. Please forgive me. You mean everything to me. I promise to love you better, respect you more, and never hurt you again. ❤️", color:"#ff6b81" }
+  { img:"photo6.jpeg", text:"Meghaaaa Ji... I am truly sorry. Please forgive me. You mean everything to me. I promise to love you better and never hurt you again. ❤️", color:"#ff6b81" }
 ];
 
 let index = 0;
 
-/* Create floating hearts */
+/* Floating hearts generator */
 setInterval(()=>{
   const heart=document.createElement("div");
   heart.className="heart";
   heart.innerHTML="❤️";
   heart.style.left=Math.random()*100+"%";
   heart.style.fontSize=(15+Math.random()*20)+"px";
-  heart.style.animationDuration=(4+Math.random()*4)+"s";
+  heart.style.animationDuration=(6+Math.random()*4)+"s";
   document.querySelector(".phone").appendChild(heart);
-
-  setTimeout(()=>heart.remove(),7000);
-},500);
+  setTimeout(()=>heart.remove(),10000);
+},600);
 
 function start(){
   document.getElementById("intro").classList.add("hidden");
@@ -178,7 +188,7 @@ function createBalloon(){
     }
 
     index++;
-    setTimeout(createBalloon,800);
+    setTimeout(createBalloon,1500);
   };
 
   document.querySelector(".phone").appendChild(balloon);
@@ -197,5 +207,4 @@ function closePopup(){
 </script>
 
 </body>
-
 </html>
