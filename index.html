@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Meghaaaa Ji ❤️</title>
+
+<style>
+body{
+  margin:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background:linear-gradient(to top,#ff9a9e,#fad0c4);
+  font-family:Arial, sans-serif;
+  overflow:hidden;
+}
+
+/* 9:16 container */
+.phone{
+  width:360px;
+  height:640px;
+  border-radius:30px;
+  overflow:hidden;
+  position:relative;
+  background:linear-gradient(to top,#ffdde1,#ee9ca7);
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  color:rgba(255,255,255,0.8);
+  font-size:20px;
+  animation:floatHearts 6s linear infinite;
+}
+
+@keyframes floatHearts{
+  0%{transform:translateY(100%);opacity:0;}
+  30%{opacity:1;}
+  100%{transform:translateY(-120%);opacity:0;}
+}
+
+/* Intro */
+.intro{
+  position:absolute;
+  width:100%;
+  top:40%;
+  text-align:center;
+}
+
+button{
+  padding:10px 20px;
+  font-size:16px;
+  border:none;
+  background:#ff4e50;
+  color:white;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+/* Balloons floating upward */
+.balloon{
+  width:70px;
+  height:90px;
+  border-radius:50%;
+  position:absolute;
+  bottom:-120px;
+  cursor:pointer;
+  animation:rise 6s linear forwards;
+}
+
+.balloon::after{
+  content:'';
+  width:2px;
+  height:35px;
+  background:black;
+  position:absolute;
+  bottom:-35px;
+  left:50%;
+}
+
+@keyframes rise{
+  from{transform:translateY(0);}
+  to{transform:translateY(-750px);}
+}
+
+/* Popup */
+.popup{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background:white;
+  border-radius:25px 25px 0 0;
+  padding:15px;
+  box-shadow:0 -5px 15px rgba(0,0,0,0.2);
+}
+
+.popup img{
+  width:100%;
+  border-radius:15px;
+}
+
+.popup p{
+  font-size:14px;
+}
+
+.hidden{display:none;}
+
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="intro" id="intro">
+  <h2>✨ Meghaaaa Ji, This Is For You ✨</h2>
+  <button onclick="start()">Tap Here ❤️</button>
+</div>
+
+<div id="popup" class="popup hidden">
+  <img id="popupImage">
+  <p id="popupText"></p>
+  <button onclick="closePopup()">Close</button>
+</div>
+
+<audio id="voice" src="voice.mp3"></audio>
+
+</div>
+
+<script>
+
+const data = [
+  { img:"photo1.jpg", text:"Meghaaaa Ji ❤️ You are the most beautiful part of my life.", color:"#ff4e50" },
+  { img:"photo2.jpg", text:"Every moment with you feels magical 💕", color:"#ff7675" },
+  { img:"photo3.jpg", text:"Your smile is my biggest happiness 😊", color:"#fd79a8" },
+  { img:"photo4.jpg", text:"I never want to hurt you Meghaaaa Ji 💖", color:"#e84393" },
+  { img:"photo5.jpg", text:"You are my forever and always 🌹", color:"#fab1a0" },
+  { img:"photo6.jpg", text:"Meghaaaa Ji... I am truly sorry. Please forgive me. You mean everything to me. I promise to love you better, respect you more, and never hurt you again. ❤️", color:"#ff6b81" }
+];
+
+let index = 0;
+
+/* Create floating hearts */
+setInterval(()=>{
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"%";
+  heart.style.fontSize=(15+Math.random()*20)+"px";
+  heart.style.animationDuration=(4+Math.random()*4)+"s";
+  document.querySelector(".phone").appendChild(heart);
+
+  setTimeout(()=>heart.remove(),7000);
+},500);
+
+function start(){
+  document.getElementById("intro").classList.add("hidden");
+  createBalloon();
+}
+
+function createBalloon(){
+  if(index>=data.length) return;
+
+  const balloon=document.createElement("div");
+  balloon.className="balloon";
+  balloon.style.background=data[index].color;
+  balloon.style.left=Math.random()*280+"px";
+
+  balloon.onclick=function(){
+    showPopup(data[index]);
+    balloon.remove();
+
+    if(index===data.length-1){
+      document.getElementById("voice").play();
+    }
+
+    index++;
+    setTimeout(createBalloon,800);
+  };
+
+  document.querySelector(".phone").appendChild(balloon);
+}
+
+function showPopup(item){
+  document.getElementById("popupImage").src=item.img;
+  document.getElementById("popupText").innerText=item.text;
+  document.getElementById("popup").classList.remove("hidden");
+}
+
+function closePopup(){
+  document.getElementById("popup").classList.add("hidden");
+}
+
+</script>
+
+</body>
+</html>
